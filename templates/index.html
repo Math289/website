@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+  <div class="wrap">
+    <p class="hero__eyebrow">{{ config.extra.department_name }} &middot; {{ config.extra.quarter }}</p>
+    <h1 class="hero__title">{{ config.extra.course_number }}: {{ config.extra.course_title }}</h1>
+    <p class="hero__subtitle">{{ section.extra.description | default(value="Course description placeholder — a one- or two-sentence summary of what the course covers and who it's for goes here.") }}</p>
+
+    <dl class="hero__meta">
+      <div>
+        <dt>Lecture</dt>
+        <dd>{{ section.extra.meeting_time | default(value="TBD") }}</dd>
+      </div>
+      <div>
+        <dt>Location</dt>
+        <dd>{{ section.extra.meeting_location | default(value="TBD") }}</dd>
+      </div>
+      <div>
+        <dt>Units</dt>
+        <dd>{{ section.extra.units | default(value="TBD") }}</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<section class="wrap section">
+  <h2 class="section__heading">Latest news</h2>
+  {% if section.extra.news %}
+  <ul class="news-list">
+    {% for item in section.extra.news %}
+    <li class="news-list__item">
+      {% if item.date %}<span class="news-list__date">{{ item.date }}</span>{% endif %}
+      <span class="news-list__text">{{ item.text | safe }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="muted">No announcements yet — check back closer to the start of the quarter.</p>
+  {% endif %}
+</section>
+
+<section class="wrap section">
+  <h2 class="section__heading">About this course</h2>
+  <div class="prose">
+    {{ section.content | safe }}
+  </div>
+</section>
+
+{% if section.extra.instructor %}
+<section class="wrap section">
+  <h2 class="section__heading">Instructor</h2>
+  <div class="people-grid people-grid--single">
+    <div class="person-card">
+      <img class="person-card__photo" src="{{ get_url(path=section.extra.instructor.photo) }}" alt="Photo of {{ section.extra.instructor.name }}">
+      {% if section.extra.instructor.url %}
+      <a class="person-card__name" href="{{ section.extra.instructor.url }}">{{ section.extra.instructor.name }}</a>
+      {% else %}
+      <span class="person-card__name">{{ section.extra.instructor.name }}</span>
+      {% endif %}
+      {% if section.extra.instructor.role %}<span class="person-card__role">{{ section.extra.instructor.role }}</span>{% endif %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if section.extra.student_leaders %}
+<section class="wrap section">
+  <h2 class="section__heading">Student Leaders</h2>
+  <div class="people-grid">
+    {% for person in section.extra.student_leaders %}
+    <div class="person-card">
+      <img class="person-card__photo" src="{{ get_url(path=person.photo) }}" alt="Photo of {{ person.name }}">
+      {% if person.url %}
+      <a class="person-card__name" href="{{ person.url }}">{{ person.name }}</a>
+      {% else %}
+      <span class="person-card__name">{{ person.name }}</span>
+      {% endif %}
+      {% if person.role %}<span class="person-card__role">{{ person.role }}</span>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<section class="wrap section">
+  <h2 class="section__heading">Quick links</h2>
+  <div class="card-grid">
+    <a class="card" href="{{ get_url(path="@/schedule.md") }}">
+      <span class="card__title">Schedule</span>
+      <span class="card__desc">Lecture topics, readings, and deadlines by week.</span>
+    </a>
+    <a class="card" href="{{ get_url(path="@/policies.md") }}">
+      <span class="card__title">Policies</span>
+      <span class="card__desc">Grading, collaboration, late work, and accommodations.</span>
+    </a>
+  </div>
+</section>
+{% endblock content %}

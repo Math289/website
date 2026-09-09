@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Schedule — {{ config.extra.course_number }}{% endblock title %}
+
+{% block content %}
+<section class="page-header">
+  <div class="wrap">
+    <h1>{{ page.title }}</h1>
+  </div>
+</section>
+
+<section class="wrap section">
+  {% if page.extra.intro %}
+  <p class="muted">{{ page.extra.intro }}</p>
+  {% endif %}
+
+  <div class="table-wrap">
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th scope="col">Week</th>
+          <th scope="col">Date</th>
+          <th scope="col">Topic</th>
+          <th scope="col">Reading</th>
+          <th scope="col">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% set_global last_week = 0 %}
+        {% for row in page.extra.weeks %}
+        <tr>
+          <td data-label="Week">{% if row.week != last_week %}{{ row.week }}{% set_global last_week = row.week %}{% endif %}</td>
+          <td data-label="Date">{{ row.date | default(value="TBD") }}</td>
+          <td data-label="Topic">{{ row.topic | default(value="Topic TBD") }}</td>
+          <td data-label="Reading">{{ row.reading | default(value="—") }}</td>
+          <td data-label="Notes">{{ row.notes | default(value="—") }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+{% if page.content %}
+<section class="wrap section">
+  <h2 class="section__heading">Tentative Syllabus</h2>
+  <div class="prose">
+    {{ page.content | safe }}
+  </div>
+</section>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,37 @@
+# The URL the site will be built for
+base_url = "https://math289.github.io/website/"
+
+title = "MATH 289"
+description = "MATH 289 — Stanford University, Fall 2026"
+default_language = "en"
+
+# Whether to automatically compile all Sass files in the sass directory
+compile_sass = true
+
+# Whether to build a search index to be used later on by a JavaScript library
+build_search_index = false
+
+# Generate an RSS/Atom feed
+generate_feeds = false
+
+[markdown]
+
+[markdown.highlighting]
+theme = "catppuccin-mocha"
+
+[extra]
+# Put all your custom variables here
+site_name = "MATH 289"
+course_number = "MATH 289"
+course_title = "Mathematical Practice in a Changing World"
+quarter = "Fall 2026"
+department_name = "Stanford Mathematics"
+department_url = "https://mathematics.stanford.edu/"
+university_name = "Stanford University"
+
+# Top navigation, in order
+nav = [
+    { name = "Home", url = "@/_index.md" },
+    { name = "Schedule", url = "@/schedule.md" },
+    { name = "Policies", url = "@/policies.md" },
+]

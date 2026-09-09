@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ config.extra.course_number }} — {{ config.extra.course_title }}{% endblock title %}</title>
+  <meta name="description" content="{{ config.description }}">
+  <link rel="icon" type="image/svg+xml" href="{{ get_url(path="favicon.svg") }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ get_url(path="main.css") }}">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="{{ get_url(path="@/_index.md") }}">
+        <img class="brand__logo" src="{{ get_url(path="images/logo-placeholder.svg") }}" alt="{{ config.extra.department_name }} logo (placeholder)">
+        <span class="brand__text">
+          <span class="brand__course">{{ config.extra.course_number }}</span>
+          <span class="brand__dept">{{ config.extra.department_name }}</span>
+        </span>
+      </a>
+
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <label for="nav-toggle" class="nav-toggle__label" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </label>
+
+      <nav class="site-nav" aria-label="Primary">
+        <ul>
+          {% for item in config.extra.nav %}
+          {% set item_url = get_url(path=item.url) %}
+          <li>
+            <a href="{{ item_url }}" {% if current_url and current_url == item_url %}aria-current="page"{% endif %}>
+              {{ item.name }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="banner">
+    <div class="wrap">
+      This site is a work in progress — schedule, policies, and content are placeholders and subject to change.
+    </div>
+  </div>
+
+  <main id="main">
+    {% block content %}{% endblock content %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div class="site-footer__col">
+        <strong>{{ config.extra.course_number }}</strong> — {{ config.extra.quarter }}<br>
+        {{ config.extra.university_name }}
+      </div>
+      <div class="site-footer__col">
+        <a href="{{ config.extra.department_url }}">{{ config.extra.department_name }}</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
