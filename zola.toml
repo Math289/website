@@ -1,5 +1,5 @@
 # The URL the site will be built for
-base_url = "https://math289.github.io/website/"
+base_url = "https://web.stanford.edu/class/math289/"
 
 title = "MATH 289"
 description = "MATH 289 — Stanford University, Fall 2026"
